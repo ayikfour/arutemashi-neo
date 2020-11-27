@@ -4,6 +4,10 @@ const _ = require('lodash');
 const update = (posts = [], tags = [], users = [], offset, since) => {
    try {
       addPosts(posts);
+      console.log(getPosts().length);
+
+      flatten(getPosts, setPosts);
+      console.log(getPosts().length);
 
       addTags(tags);
       flatten(getTags, setTags);
@@ -13,7 +17,7 @@ const update = (posts = [], tags = [], users = [], offset, since) => {
 
       setSince(since);
       setOffset(offset);
-      setCount(posts.length);
+      setCount(getPosts().length);
    } catch (error) {
       console.log(error);
       process.exit(9);
@@ -79,7 +83,7 @@ const setSince = (since) => dashboard.update('since', (s) => since).write();
  * set
  */
 const getCount = () => dashboard.get('count').value();
-const setCount = (count) => dashboard.update('count', (c) => c + count).write();
+const setCount = (count) => dashboard.update('count', (c) => count).write();
 
 /**
  * Offset controllers
@@ -97,7 +101,7 @@ const setOffset = (offset) => dashboard.update('offset', (o) => offset).write();
  */
 const flatten = (getter, setter) => {
    let current = getter();
-   let uniq = _.uniq(current);
+   let uniq = _.uniqBy(current, 'id');
    setter(uniq);
 };
 
