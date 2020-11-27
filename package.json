@@ -1,0 +1,49 @@
+{
+   "name": "arutemashi-neo",
+   "version": "1.0.12",
+   "description": "node cli of arutemashi",
+   "repository": "https://github.com/ayikfour/kowalski",
+   "main": "./src/index.js",
+   "preferGlobal": true,
+   "engines": {
+      "node": ">=8"
+   },
+   "keywords": [
+      "arutemashi",
+      "tumblr",
+      "summarizer",
+      "twitter"
+   ],
+   "scripts": {
+      "start": "node server.js",
+      "test": "echo \"Error: no test specified\" && exit 1"
+   },
+   "bin": {
+      "arutemashi": "bin/arutemashi"
+   },
+   "author": "ayikfour",
+   "contributors": [
+      {
+         "name": "bitxt",
+         "email": "kontak.farhan@gmail.com"
+      }
+   ],
+   "license": "ISC",
+   "dependencies": {
+      "colors": "^1.4.0",
+      "dotenv": "^8.2.0",
+      "express": "^4.17.1",
+      "image-downloader": "^4.0.1",
+      "inquirer": "^7.3.3",
+      "lodash": "^4.17.20",
+      "login-with-twitter": "^1.2.3",
+      "lowdb": "^1.0.0",
+      "minimist": "^1.2.5",
+      "node-cron": "^2.0.3",
+      "oauth": "^0.9.15",
+      "ora": "^5.1.0",
+      "step": "^1.0.0",
+      "tumblr.js": "^3.0.0",
+      "twit": "^2.2.11"
+   }
+}
