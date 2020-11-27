@@ -90,13 +90,7 @@ const home = async () => {
       let users = [];
 
       spinner.start('cleaning post and deconstruct...');
-      posts = posts.filter(
-         (post) =>
-            post === 'photo' && !db_liked.findPosts({ id: post.id_string })
-      );
-
       let new_posts = posts.map((post, index) => {
-         if (post.type !== 'photo') return;
          let data = {
             id: post.id_string,
             name: post.blog_name,
@@ -127,6 +121,7 @@ const home = async () => {
       return new_posts;
    } catch (error) {
       spinner.fail('failed! :(');
+      console.log(error);
    }
 };
 

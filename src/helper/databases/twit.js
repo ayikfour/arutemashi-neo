@@ -80,7 +80,7 @@ const updateCursor = (value) => twit.update('cursor', (c) => c + value).write();
  */
 const flatten = (getter, setter) => {
    let current = getter();
-   let uniq = _.uniq(current);
+   let uniq = _.uniqBy(current, 'id');
    setter(uniq);
 };
 
