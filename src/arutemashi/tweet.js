@@ -53,8 +53,8 @@ const post = async () => {
       spinner.succeed();
 
       // console.log(postItem);
-      spinner.start(`downloading image from ${postItem?.photo}`);
-      const filepath = await IO.download(postItem?.photo, postItem.id);
+      spinner.start(`downloading image from ${postItem.photo}`);
+      const filepath = await IO.download(postItem.photo, postItem.id);
       spinner.succeed();
 
       spinner.start('load the downloaded image...');
@@ -73,7 +73,7 @@ const post = async () => {
 
       spinner.start('cleaning draft...');
       db_twit.addTweeted([{ ...postItem, sourced: false }]);
-      db_twit.removeDraft({ id: postItem?.id });
+      db_twit.removeDraft({ id: postItem.id });
 
       spinner.text = 'deleting image...';
       IO.remove(filepath);

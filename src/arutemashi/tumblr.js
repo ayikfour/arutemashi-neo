@@ -27,8 +27,8 @@ const liked = async () => {
       });
       spinner.succeed();
 
-      before = _links.next?.query_params?.before;
-      let after = _links.prev?.query_params?.after;
+      before = _links.next.query_params.before;
+      let after = _links.prev.query_params.after;
 
       if (!liked_posts) throw Error;
 
@@ -115,8 +115,8 @@ const home = async () => {
 
       // Saving new post, tags, users, offset, since to the db
       spinner.start('saving posts to the db...');
-      offset = _.last(posts)?.id_string;
-      let since = _.head(posts)?.id_string;
+      offset = _.last(posts).id_string;
+      let since = _.head(posts).id_string;
 
       db_dashboard.update(new_posts, tags, users, offset, since);
 
