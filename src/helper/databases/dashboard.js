@@ -106,6 +106,7 @@ module.exports = {
    update,
    getPosts,
    addPosts,
+   setPosts,
    findPosts,
    getTags,
    addTags,

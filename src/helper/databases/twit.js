@@ -89,6 +89,7 @@ module.exports = {
    update,
    getDraft,
    addDraft,
+   setDraft,
    removeDraft,
    getTweeted,
    addTweeted,

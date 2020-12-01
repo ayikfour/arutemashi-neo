@@ -21,16 +21,13 @@ const draft = async () => {
       const newPostsFromDashboard = db_dashboard.getPosts();
       spinner.text = 'join posts from liked and dashboard';
 
-      const newPosts = _.unionBy(
-         newPostsFromDashboard,
-         newPostsFromLiked,
-         'id'
-      );
+      let newPosts = _.unionBy(newPostsFromDashboard, newPostsFromLiked, 'id');
 
       spinner.text = 'get uniq post';
       const oldPosts = db_twit.getTweeted();
-      let newDraft = _.uniqBy(newPosts, oldPosts, 'id');
+      let newDraft = _.uniqWith(newPosts, oldPosts, 'id');
 
+      // console.log(newDraft);
       db_twit.update(newDraft);
       spinner.succeed('draft has been updated! ✨');
    } catch (error) {
@@ -39,18 +36,36 @@ const draft = async () => {
    }
 };
 
+const clean = async () => {
+   const spinner = ora('cleaning twit database...');
+   try {
+      spinner.text = 'cleaning draft tweet from garbage...';
+      const draftPosts = db_twit.getDraft();
+      const cleanedDraft = draftPosts.filter((post) => post !== null);
+      db_twit.setDraft(cleanedDraft);
+      spinner.succeed();
+   } catch (error) {
+      spinner.fail(error.message);
+   }
+};
+
 const post = async () => {
    const spinner = ora('moving new post to draft');
    try {
       spinner.start('get first post on draft...');
-      const postItem = _.sample(db_twit.getDraft());
+      const draftPosts = db_twit.getDraft();
+      spinner.succeed();
 
-      if (!postItem) {
+      if (draftPosts.length == 0) {
          await draft();
          throw Error('Draft is empty, moving new draft');
       }
 
-      spinner.succeed();
+      const postItem = _.sample(draftPosts);
+      if (!postItem) {
+         await clean();
+         throw Error('There is a garbage in draft.');
+      }
 
       // console.log(postItem);
       spinner.start(`downloading image from ${postItem.photo}`);

@@ -174,6 +174,24 @@ const reset = async (option = 'dashboard') => {
    }
 };
 
+const clean = async () => {
+   const spinner = ora('cleaning tumblr database...');
+   try {
+      spinner.text = 'cleaning liked db from garbage...';
+      const likedPosts = db_liked.getPosts();
+      const cleanedLiked = likedPosts.filter((post) => post !== null);
+      db_liked.setPosts(cleanedLiked);
+      spinner.succeed();
+
+      spinner.text = 'cleaning dashboard db from garbage...';
+      const homePosts = db_dashboard.getPosts();
+      const cleanedHome = homePosts.filter((post) => post !== null);
+      db_dashboard.setPosts(cleanedHome);
+      spinner.succeed();
+   } catch (error) {
+      spinner.fail(error.message);
+   }
+};
 const handle = async (action, args) => {
    const used = process.memoryUsage().heapUsed / 1024 / 1024;
    switch (action) {
@@ -202,4 +220,4 @@ const handle = async (action, args) => {
    }
 };
 
-module.exports = { liked, home, add_user, reset, handle };
+module.exports = { liked, home, add_user, reset, handle, clean };
