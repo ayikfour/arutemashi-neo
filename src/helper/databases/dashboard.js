@@ -4,10 +4,7 @@ const _ = require('lodash');
 const update = (posts = [], tags = [], users = [], offset, since) => {
    try {
       addPosts(posts);
-      console.log(getPosts().length);
-
       flatten(getPosts, setPosts);
-      console.log(getPosts().length);
 
       addTags(tags);
       flatten(getTags, setTags);
